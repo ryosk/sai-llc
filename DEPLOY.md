@@ -1,5 +1,30 @@
 # Cloudflare Pages デプロイ手順
 
+## 方法3: GitHub Actionsで自動デプロイ（推奨・現在設定済み）
+
+このリポジトリには、`main` への push をトリガーに Cloudflare Pages へ自動デプロイするワークフロー（`.github/workflows/deploy-cloudflare-pages.yml`）が含まれています。静的ファイルを安全に抽出して `dist/` に集約し、Cloudflare Pages のプロジェクト `sai-llc` に配備します。
+
+### 事前準備（1回のみ）
+- Cloudflare Pages プロジェクトを作成
+  - プロジェクト名: `sai-llc`
+  - Framework: なし（ビルド不要）
+- GitHub Secrets を設定（Repository > Settings > Secrets and variables > Actions）
+  - `CLOUDFLARE_ACCOUNT_ID`: Cloudflare アカウントID
+  - `CLOUDFLARE_API_TOKEN`: Pages へのデプロイ権限を持つ API Token（Account: Cloudflare Pages - Edit 権限が必要）
+
+### デプロイの流れ
+1. `main` に push
+2. GitHub Actions が起動し、リポジトリ直下の静的ファイルを `dist/` にコピー（`.github` やドキュメントは除外）
+3. `dist/` を Cloudflare Pages（`sai-llc`）へアップロード
+
+### 手動実行
+- GitHub の Actions タブから当該ワークフローを選び、「Run workflow」で手動実行も可能です。
+
+### トラブルシュート
+- 403/認証エラー: Secrets の `CLOUDFLARE_ACCOUNT_ID` / `CLOUDFLARE_API_TOKEN` が正しいか確認
+- プロジェクト名エラー: Pages 側のプロジェクトが `sai-llc` か確認
+- 配備内容が空/不足: ワークフローの「Prepare dist」ステップの除外設定やファイル配置を確認
+
 ## 方法1: Cloudflare Dashboardから直接アップロード（最も簡単・推奨）
 
 ### 手順

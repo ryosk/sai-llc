@@ -1,0 +1,16 @@
+name = "sai-llc"
+compatibility_date = "2025-11-17"
+
+# 静的アセットの設定
+[assets]
+directory = "./"
+
+# ビルド設定（静的サイトなのでビルドコマンドは不要）
+[build]
+# コマンドを空にして、ビルドステップをスキップ
+command = ""
+
+# デプロイメント設定
+[[rules]]
+pathname = "/*"
+try_files = ["$pathname", "$pathname.html", "/index.html"]

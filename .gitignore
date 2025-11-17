@@ -45,7 +45,6 @@ deploy.zip
 
 # Wrangler
 .wrangler/
-.wrangler.toml
 
 # Node modules (if any)
 node_modules/
